@@ -37,6 +37,9 @@ def profile3():
 	return render_template('profile3.html')
 
 
+@app.route('/science')
+def science():
+	return render_template('science.html')
 
 @app.route('/compare')
 def compare():
