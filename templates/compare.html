@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Cat Pro-Pillar</title>
+		<script src="https://use.fontawesome.com/7d9a97a6c0.js"></script>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+		<script type="text/javascript" src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+	    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+
+	    <!-- Custom CSS -->
+	    <link href="{{ url_for('static', filename='sb-admin.css') }}" rel="stylesheet">
+
+	    <!-- Morris Charts CSS -->
+	    <link href="{{ url_for('static', filename='morris.css')}}" rel="stylesheet">
+
+	    <script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/highcharts-more.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+	</head>
+	<body>
+
+			
+		<div id="wrapper">
+
+	        <!-- Navigation -->
+	        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                <a class="navbar-brand" href="/">CAT Pro-Pillar</a>
+	            </div>
+	            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+	            <div class="collapse navbar-collapse navbar-ex1-collapse">
+	                <ul class="nav navbar-nav side-nav">
+	                    <li>
+	                        <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+	                    </li>
+	                    <li>
+	                        <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-fw fa-upload"></i>Upload</a>
+	                    </li>
+
+	                    <li class="active">
+	                        <a href="/profile"><i class="fa fa-fw fa-truck"></i> Driver 1</a>
+	                    </li>
+	                    <li>
+	                        <a href="/profile2"><i class="fa fa-fw fa-truck"></i> Driver 2</a>
+	                    </li>
+	                    <li>
+	                        <a href="/profile3"><i class="fa fa-fw fa-truck"></i> Driver 3</a>
+	                    </li>
+	                    <li>
+	                        <a href="/compare"><i class="fa fa-fw fa-desktop"></i> Compare Drivers</a>
+	                    </li>
+
+	                </ul>
+	            </div>
+	            <!-- /.navbar-collapse -->
+	        </nav>
+
+	        <div id="page-wrapper">
+
+	            <div class="container-fluid">
+
+	                <!-- Page Heading -->
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <h1 class="page-header">
+	                            Compare Drivers
+	                        </h1>
+	                    </div>
+	                </div>
+	                <!-- /.row -->
+
+
+					<!--start row-->
+	                <div class="row">
+	                	<!--start col-->
+	                	<div class="col-lg-12">
+	                        <div class="panel panel-default">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Performance Profile</h3>
+	                                <br /> <br />
+	                                <div id="container" style="min-width: 400px; max-width: 100%; height: 100%; margin: 0 auto"></div>
+
+	                            </div>
+	                            <div class="panel-body">
+	                                <div id="morris-area-chart"></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <!--end col-->
+	                </div>
+	                <!--.row-->
+
+	            </div>
+	            <!-- /.container-fluid -->
+
+	        </div>
+	        <!-- /#page-wrapper -->
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel"><h3>Upload</h3></h4>
+			      </div>
+			      <div class="modal-body">
+ 					 <form action="upload" method="post" enctype="multipart/form-data">
+				        <input class="btn btn-default btn-file" type="file" name="file"><br /><br />
+    			        <input class="btn btn-primary" type="submit" value="Upload"></button>
+				      </form>	
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!--end Modal-->
+	    </div>
+	    <!-- /#wrapper -->
+	    <!-- Bootstrap Core JavaScript -->
+    	<script src="{{ url_for('static', filename='bootstrap.min.js')}}"></script>
+    	<script>
+			    		
+			$(function () {
+
+			    $('#container').highcharts({
+
+			        chart: {
+			            polar: true,
+			            type: 'line'
+			        },
+
+			        title: {
+			            text: 'Driver Comparison',
+			            x: -80
+			        },
+
+			        pane: {
+			            size: '80%'
+			        },
+
+			        xAxis: {
+			            categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
+			                    'Information Technology', 'Administration'],
+			            tickmarkPlacement: 'on',
+			            lineWidth: 0
+			        },
+
+			        yAxis: {
+			            gridLineInterpolation: 'polygon',
+			            lineWidth: 0,
+			            min: 0
+			        },
+
+			        tooltip: {
+			            shared: true,
+			            pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+			        },
+
+			        legend: {
+			            align: 'right',
+			            verticalAlign: 'top',
+			            y: 70,
+			            layout: 'vertical'
+			        },
+
+			        series: [{
+			            name: 'Driver 1',
+			            data: [43000, 19000, 60000, 35000, 17000, 10000],
+			            pointPlacement: 'on'
+			        }, {
+			            name: 'Driver 2',
+			            data: [50000, 39000, 42000, 31000, 26000, 14000],
+			            pointPlacement: 'on'
+			        },
+			        {
+			            name: 'Driver 3',
+			            data: [10000, 29000, 2000, 101000, 22600, 1000],
+			            pointPlacement: 'on'
+			        }]
+
+			    });
+			});
+    	</script>
+
+	</body>
+</html>
